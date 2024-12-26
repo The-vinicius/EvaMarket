@@ -9,6 +9,7 @@ class StoreStocks extends ChangeNotifier {
   AssetModel? assetModel;
   bool error = false;
   String? selectedTicker;
+  List<ChartData> data = [];
 
   Future<void> getStock(String stock, DateTime date) async {
     loading = true;
@@ -19,6 +20,7 @@ class StoreStocks extends ChangeNotifier {
     final result = await repository.getDate(stock, date);
     result.fold((result) {
       assetModel = result;
+      data = chartDataStock();
     }, (e) {
       error = true;
     });
@@ -26,18 +28,29 @@ class StoreStocks extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<ChartData?> chartDataStock() {
+  void graph(int days) {
+    data = chartDataStock().sublist(chartDataStock().length - days);
+    notifyListeners();
+  }
+
+  List<ChartData> chartDataStock() {
     if (assetModel != null) {
       return List.generate(
           assetModel!.dates.length,
           (index) =>
               ChartData(assetModel!.dates[index], assetModel!.prices[index]));
     }
-    return [];
+    return [ChartData(DateTime.now(), 0.0)];
   }
 
   double currentPrice() {
     if (assetModel != null) return assetModel!.prices.last;
     return 0.0;
+  }
+
+  double minPrice() {
+    final price = data.reduce(
+        (values, element) => values.price < element.price ? values : element);
+    return price.price;
   }
 }
