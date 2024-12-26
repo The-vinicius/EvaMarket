@@ -8,7 +8,7 @@ import 'package:evamarket/app/repositories/yahoo_data_repository.dart';
 final injector = AutoInjector();
 
 void setupInjector() {
-  injector.addSingleton<TickerDatasource>(TickerDatasource.new);
+  injector.add<TickerDatasource>(TickerDatasource.new);
   injector.add<TickerRepository>(SearchTickerRepository.new);
   injector.add<DataRepository>(YahooDataRepository.new);
   injector.commit();

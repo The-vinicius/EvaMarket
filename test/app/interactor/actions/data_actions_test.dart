@@ -17,12 +17,12 @@ class MockDataRepository implements DataRepository {
     });
     return result;
   }
+
   @override
   noSuchMethod(Invocation invocation) {
     return super.noSuchMethod(invocation);
   }
 }
-
 
 void main() {
   late MockDataRepository mockRepository;
@@ -44,7 +44,6 @@ void main() {
     // );
     await getStock(stock, date);
     expect(loading.value, false);
-    expect(stocks.value.length, 1);
+    expect(store.value.length, 1);
   });
 }
-

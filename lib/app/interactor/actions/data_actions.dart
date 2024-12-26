@@ -7,7 +7,7 @@ Future<void> getStock(String stock, DateTime date) async {
   final repository = injector.get<DataRepository>();
   final result = await repository.getDate(stock, date);
   result.fold((result) {
-    stocks.value.add(result);
+    store.value.add(result);
   }, (e) {
     error.value = 'error';
   });

@@ -38,9 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   result_dart: ^1.1.1
   auto_injector: ^2.0.5
-  fl_chart: ^0.69.2
   syncfusion_flutter_charts: ^28.1.33
-  http: ^1.2.2
+  routefly: ^2.0.4
 
 dev_dependencies:
   flutter_test:
@@ -66,8 +65,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - ./assets/tickers.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
