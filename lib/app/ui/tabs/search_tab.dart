@@ -47,8 +47,8 @@ class _SearchPageState extends State<SearchTab> {
                               return ListTile(
                                 title: Text(result.symbol),
                                 subtitle: Text(result.name),
-                                onTap: () async {
-                                  await stocks.getStock(
+                                onTap: () {
+                                  stocks.getStock(
                                       result.symbol, DateTime(now.year - 1));
                                   Navigator.of(context)
                                       .pushNamed('/graph', arguments: result);
