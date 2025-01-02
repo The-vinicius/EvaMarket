@@ -24,6 +24,7 @@ class _SearchPageState extends State<SearchTab> {
             child: Column(
               children: [
                 TextField(
+                  key: const Key('search_key'),
                   controller: _controller,
                   onChanged: (query) async => await store.search(query),
                   decoration: const InputDecoration(
@@ -36,6 +37,7 @@ class _SearchPageState extends State<SearchTab> {
                   const CircularProgressIndicator()
                 else
                   Expanded(
+                    key: const Key('ticker_key'),
                     child: store.hasError
                         ? Center(
                             child: Text(store.errorMessage),
@@ -48,8 +50,8 @@ class _SearchPageState extends State<SearchTab> {
                                 title: Text(result.symbol),
                                 subtitle: Text(result.name),
                                 onTap: () {
-                                  stocks.getStock(
-                                      result.symbol, DateTime(now.year - 1));
+                                  stocks.getStock(result.symbol,
+                                      DateTime(now.year, now.month - 12, 1));
                                   Navigator.of(context)
                                       .pushNamed('/graph', arguments: result);
                                 },
