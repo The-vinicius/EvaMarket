@@ -42,10 +42,15 @@ class GraphPage extends StatelessWidget {
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 10, bottom: 3, left: 5),
-                      child: Text(
-                        "${stocks.assetModel?.prices.last.toStringAsFixed(2)}",
-                        style: const TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
+                      child: Row(
+                        children: [
+                          Text(
+                            "${stocks.assetModel?.prices.last.toStringAsFixed(2)}",
+                            style: const TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold),
+                          ),
+                          Text("(${stocks.porcentagem().toStringAsFixed(2)}%)"),
+                        ],
                       ),
                     ),
                     Padding(
@@ -69,6 +74,11 @@ class GraphPage extends StatelessWidget {
                             child: const Text('1M')),
                         TextButton(
                             onPressed: () async {
+                              stocks.graph(180);
+                            },
+                            child: const Text('6M')),
+                        TextButton(
+                            onPressed: () async {
                               stocks.graph(365);
                             },
                             child: const Text('1Y')),
@@ -78,16 +88,13 @@ class GraphPage extends StatelessWidget {
                       height: 300,
                       child: SfCartesianChart(
                         trackballBehavior: TrackballBehavior(enable: true),
-                        zoomPanBehavior: ZoomPanBehavior(
-                          enablePinching:
-                              true, // Permite zoom com pinça (pinch-to-zoom)
-                          enablePanning: true, // Permite arrastar
-                          zoomMode:
-                              ZoomMode.xy, // Habilita zoom nos eixos X e Y
-                        ),
-                        // title: ChartTitle(
-                        //     text: '\$${stocks.currentPrice().toStringAsFixed(2)}',
-                        //     alignment: ChartAlignment.far),
+                        // zoomPanBehavior: ZoomPanBehavior(
+                        //   enablePinching:
+                        //       true, // Permite zoom com pinça (pinch-to-zoom)
+                        //   enablePanning: true, // Permite arrastar
+                        //   zoomMode:
+                        //       ZoomMode.xy, // Habilita zoom nos eixos X e Y
+                        // ),
                         tooltipBehavior: TooltipBehavior(enable: true),
                         primaryXAxis: DateTimeAxis(
                           intervalType: DateTimeIntervalType.months,
@@ -97,9 +104,11 @@ class GraphPage extends StatelessWidget {
                         primaryYAxis: NumericAxis(
                           tickPosition: TickPosition.inside,
                           // title: AxisTitle(text: 'Preço (\$)'),
-                          minimum: mim,
+                          minimum: mim - 1000,
+                          isVisible: true,
+                          opposedPosition: true,
                           // interval: 1,
-                          labelFormat: '\${value}',
+                          labelFormat: '{value}',
                           numberFormat: NumberFormat.compact(),
                         ),
                         series: [
@@ -115,6 +124,45 @@ class GraphPage extends StatelessWidget {
                               // markerSeneSeriettings: const MarkerSettings(isVisible: true),
                               xValueMapper: (ChartData data, _) => data.date,
                               yValueMapper: (ChartData data, _) => data.price),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 200,
+                      child: SfCartesianChart(
+                        trackballBehavior: TrackballBehavior(enable: true),
+                        // zoomPanBehavior: ZoomPanBehavior(
+                        //   enablePinching:
+                        //       true, // Permite zoom com pinça (pinch-to-zoom)
+                        //   enablePanning: true, // Permite arrastar
+                        //   zoomMode:
+                        //       ZoomMode.xy, // Habilita zoom nos eixos X e Y
+                        // ),
+                        title: const ChartTitle(
+                            text: 'RSI', alignment: ChartAlignment.near),
+                        tooltipBehavior: TooltipBehavior(enable: true),
+                        primaryXAxis: DateTimeAxis(
+                          intervalType: DateTimeIntervalType.months,
+                          dateFormat: DateFormat.yMd(),
+                          edgeLabelPlacement: EdgeLabelPlacement.shift,
+                        ),
+                        primaryYAxis: NumericAxis(
+                          minimum: stocks.minRSI() - 10,
+                          tickPosition: TickPosition.inside,
+                          numberFormat: NumberFormat.compact(),
+                          isVisible: true,
+                          opposedPosition: true,
+                        ),
+                        series: [
+                          LineSeries<ChartData, DateTime>(
+                              animationDelay: 0.0,
+                              animationDuration: 0,
+                              name: "RSI (Índice de Força Relativa)",
+                              dataSource: chartData,
+
+                              // markerSeneSeriettings: const MarkerSettings(isVisible: true),
+                              xValueMapper: (ChartData data, _) => data.date,
+                              yValueMapper: (ChartData data, _) => data.rsi),
                         ],
                       ),
                     ),
