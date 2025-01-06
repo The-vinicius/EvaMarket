@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 
 class StorePrice extends ChangeNotifier {
   double _price = 0.0;
-  List<double> _prices = [1, 3];
+  List<double> _prices = [1, 1];
   bool error = false;
 
   double get price => _price;
@@ -12,7 +12,7 @@ class StorePrice extends ChangeNotifier {
   void setPrice(String ticker) async {
     final repository = injector.get<PricesRepository>();
     final result = await repository.getPrices(ticker);
-    result.fold((s) => _prices = s, (r) => null);
+    result.fold((s) => _prices = s, (r) => error = true);
     _price = _prices[1];
     notifyListeners();
   }
