@@ -31,15 +31,11 @@ dependencies:
   flutter:
     sdk: flutter
   yahoo_finance_data_reader: ^1.0.11
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   result_dart: ^1.1.1
   auto_injector: ^2.0.5
   syncfusion_flutter_charts: ^28.1.33
-  routefly: ^2.0.4
+  google_mobile_ads: ^5.2.0
 
 dev_dependencies:
   flutter_test:
