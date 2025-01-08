@@ -13,7 +13,7 @@ class GraphPage extends StatelessWidget {
     final ticker = ModalRoute.of(context)!.settings.arguments as TickerModel;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Graph Screen'),
+        title: const Text('EvaMarket'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -88,13 +88,14 @@ class GraphPage extends StatelessWidget {
                       height: 300,
                       child: SfCartesianChart(
                         trackballBehavior: TrackballBehavior(enable: true),
-                        // zoomPanBehavior: ZoomPanBehavior(
-                        //   enablePinching:
-                        //       true, // Permite zoom com pinça (pinch-to-zoom)
-                        //   enablePanning: true, // Permite arrastar
-                        //   zoomMode:
-                        //       ZoomMode.xy, // Habilita zoom nos eixos X e Y
-                        // ),
+                        zoomPanBehavior: ZoomPanBehavior(
+                          enablePinching:
+                              true, // Permite zoom com pinça (pinch-to-zoom)
+                          enablePanning: true, // Permite arrastar
+                          zoomMode:
+                              ZoomMode.xy, // Habilita zoom nos eixos X e Y
+                        ),
+                        crosshairBehavior: CrosshairBehavior(enable: true),
                         tooltipBehavior: TooltipBehavior(enable: true),
                         primaryXAxis: DateTimeAxis(
                           intervalType: DateTimeIntervalType.months,
@@ -103,11 +104,9 @@ class GraphPage extends StatelessWidget {
                         ),
                         primaryYAxis: NumericAxis(
                           tickPosition: TickPosition.inside,
-                          // title: AxisTitle(text: 'Preço (\$)'),
-                          minimum: mim - 1000,
+                          minimum: mim * 0.9,
                           isVisible: true,
                           opposedPosition: true,
-                          // interval: 1,
                           labelFormat: '{value}',
                           numberFormat: NumberFormat.compact(),
                         ),
@@ -128,16 +127,10 @@ class GraphPage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 200,
+                      height: 250,
                       child: SfCartesianChart(
                         trackballBehavior: TrackballBehavior(enable: true),
-                        // zoomPanBehavior: ZoomPanBehavior(
-                        //   enablePinching:
-                        //       true, // Permite zoom com pinça (pinch-to-zoom)
-                        //   enablePanning: true, // Permite arrastar
-                        //   zoomMode:
-                        //       ZoomMode.xy, // Habilita zoom nos eixos X e Y
-                        // ),
+                        crosshairBehavior: CrosshairBehavior(enable: true),
                         title: const ChartTitle(
                             text: 'RSI', alignment: ChartAlignment.near),
                         tooltipBehavior: TooltipBehavior(enable: true),
@@ -147,12 +140,49 @@ class GraphPage extends StatelessWidget {
                           edgeLabelPlacement: EdgeLabelPlacement.shift,
                         ),
                         primaryYAxis: NumericAxis(
-                          minimum: stocks.minRSI() - 10,
+                          minimum: 20,
+                          maximum: 100,
                           tickPosition: TickPosition.inside,
                           numberFormat: NumberFormat.compact(),
                           isVisible: true,
                           opposedPosition: true,
                         ),
+                        annotations: [
+                          CartesianChartAnnotation(
+                              coordinateUnit: CoordinateUnit.point,
+                              region: AnnotationRegion.chart,
+                              widget: Container(
+                                color: Colors.blue,
+                                child: Text(
+                                    chartData.last.rsi.toStringAsFixed(2),
+                                    style:
+                                        const TextStyle(color: Colors.white)),
+                              ),
+                              x: chartData.last.date,
+                              y: chartData.last.rsi),
+                          CartesianChartAnnotation(
+                              coordinateUnit: CoordinateUnit.point,
+                              region: AnnotationRegion.chart,
+                              horizontalAlignment: ChartAlignment.far,
+                              widget: Container(
+                                height: 2,
+                                width: double.infinity,
+                                color: Colors.red,
+                              ),
+                              x: chartData.last.date,
+                              y: 70),
+                          CartesianChartAnnotation(
+                              coordinateUnit: CoordinateUnit.point,
+                              region: AnnotationRegion.chart,
+                              horizontalAlignment: ChartAlignment.far,
+                              widget: Container(
+                                height: 2,
+                                width: double.infinity,
+                                color: Colors.green,
+                              ),
+                              x: chartData.last.date,
+                              y: 30),
+                        ],
                         series: [
                           LineSeries<ChartData, DateTime>(
                               animationDelay: 0.0,
