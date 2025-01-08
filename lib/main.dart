@@ -2,9 +2,11 @@ import 'package:evamarket/app/injector.dart';
 import 'package:evamarket/app/ui/screens/graph_page.dart';
 import 'package:evamarket/app/ui/screens/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   setupInjector();
   runApp(const MyApp());
 }
