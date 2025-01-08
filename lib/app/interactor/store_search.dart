@@ -8,7 +8,7 @@ class StoreSearch extends ChangeNotifier {
   List<TickerModel> get stores => _stores;
   bool isLoading = false;
   bool get hasError => _stores.isEmpty;
-  String get errorMessage => "No data found";
+  String get errorMessage => "Pesquisar";
 
   Future<void> search(String keyword) async {
     isLoading = true;
