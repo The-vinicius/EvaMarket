@@ -42,6 +42,7 @@ dev_dependencies:
     sdk: flutter
   mocktail: ^1.0.4
   icons_launcher: ^3.0.0
+  flutter_native_splash: ^2.4.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -59,6 +60,14 @@ icons_launcher:
   platforms:
     android:
       enable: true
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/splash/splash.png
+  android_12:
+    color: "#ffffff"
+    image: assets/splash/splash.png
+
 # The following section is specific to Flutter packages.
 flutter:
 
