@@ -13,7 +13,7 @@ String getPriceMessage(double changePercent) {
     } else if (changePercent >= -5) {
       return "Espera cair mais um pouco para comprar!";
     } else {
-      return "Hora de comprar! O ativo está em queda livre!";
+      return "Hora de comprar!";
     }
   } else {
     return "Sem alterações no momento.";
