@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 class MonteCarloStore extends ChangeNotifier {
   final int simulations = 30; // Número de caminhos simulados
   final int periods = 30; // Dias úteis no ano
-  final double meanReturn = 0.0005; // Retorno médio diário (0.05%)
-  final double stdDev = 0.02; // Desvio padrão dos retornos diários (2%)
+  final double meanReturn = 0.0014; // Retorno médio diário (0.05%)
+  final double stdDev = 0.034; // Desvio padrão dos retornos diários (2%)
 
   List<List<ChartPrice>> simulationPaths = [];
   List<double> finalPrices = [];
@@ -38,7 +38,7 @@ class MonteCarloStore extends ChangeNotifier {
     p5 = getPercentile(finalPrices, 0.05);
     p95 = getPercentile(finalPrices, 0.95);
     var1 = (1 - initialPrice / getPercentile(finalPrices, 0.01)) * 100;
-    var5 = (1 - initialPrice / getPercentile(finalPrices, 0.05)) * 100;
+    var5 = (1 - initialPrice / getPercentile(finalPrices, 0.10)) * 100;
     simulationPaths = paths;
     notifyListeners();
   }
