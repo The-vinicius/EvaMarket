@@ -20,6 +20,6 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Graph Screen'), findsOneWidget);
+    expect(find.text('EvaMarket'), findsOneWidget);
   });
 }
