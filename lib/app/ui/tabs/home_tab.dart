@@ -22,7 +22,7 @@ class _HomePageState extends State<HomeTab> {
   BannerAd? _bannerAd;
 
   final adUnitId = Platform.isAndroid
-      ? 'ca-app-pub-3940256099942544/9214589741'
+      ? const String.fromEnvironment('AD_BANNER')
       : 'ca-app-pub-3940256099942544/2435281174';
 
   /// Loads a banner ad.
