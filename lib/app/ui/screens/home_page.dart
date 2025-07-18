@@ -1,6 +1,7 @@
 import 'package:evamarket/app/ui/tabs/home_tab.dart';
 import 'package:evamarket/app/ui/tabs/search_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,6 +23,29 @@ class _HomeScreenState extends State<HomePage> {
           "EvaMarket",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        actions: [
+          IconButton(
+            key: const Key('notification'),
+            icon: const Icon(Icons.notifications),
+            onPressed: () async {
+              await FlutterLocalNotificationsPlugin().show(
+                0,
+                'EvaMarket',
+                'You have new notifications',
+                const NotificationDetails(
+                  android: AndroidNotificationDetails(
+                    'eva_market_channel',
+                    'Eva Market Notifications',
+                    channelDescription: 'Notifications for Eva Market app',
+                    importance: Importance.max,
+                    priority: Priority.high,
+                    icon: '@mipmap/ic_launcher',
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: IndexedStack(index: index, children: pages),
       bottomNavigationBar: BottomNavigationBar(
