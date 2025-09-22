@@ -35,8 +35,11 @@ dependencies:
   result_dart: ^1.1.1
   auto_injector: ^2.0.5
   syncfusion_flutter_charts: ^28.1.33
-  flutter_local_notifications: ^19.1.0
+  flutter_local_notifications: ^19.3.0
   google_mobile_ads: ^5.2.0
+  workmanager: ^0.6.0
+  timezone: ^0.10.1
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:

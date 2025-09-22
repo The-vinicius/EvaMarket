@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomePage> {
               await FlutterLocalNotificationsPlugin().show(
                 0,
                 'EvaMarket',
-                'You have new notifications',
+                'You have new notifications {100.000}',
                 const NotificationDetails(
                   android: AndroidNotificationDetails(
                     'eva_market_channel',

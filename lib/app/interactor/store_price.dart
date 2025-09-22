@@ -9,12 +9,13 @@ class StorePrice extends ChangeNotifier {
 
   double get price => _price;
 
-  void setPrice(String ticker) async {
+  Future<double> setPrice(String ticker) async {
     final repository = injector.get<PricesRepository>();
     final result = await repository.getPrices(ticker);
     result.fold((s) => _prices = s, (r) => error = true);
     _price = _prices[1];
     notifyListeners();
+    return _price;
   }
 
   double porcent() {

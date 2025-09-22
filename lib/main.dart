@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:evamarket/app/injector.dart';
 import 'package:evamarket/app/ui/screens/graph_page.dart';
 import 'package:evamarket/app/ui/screens/home_page.dart';
@@ -5,11 +7,29 @@ import 'package:evamarket/app/ui/screens/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:workmanager/workmanager.dart';
 
-void main() {
+Future<void> main() async{
+
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
   setupInjector();
+  await init();
+  if (Platform.isAndroid) {
+  Workmanager().initialize(
+      callbackDispatcher,
+      isInDebugMode: true,
+    );
+  Workmanager().registerPeriodicTask(
+      "bitcoin-price-notification",
+      "fetchBitcoinPrice",
+      frequency: const Duration(seconds:  10),
+      initialDelay: const Duration(seconds: 10),
+      constraints: Constraints(
+        networkType: NetworkType.connected,
+      ),
+    );
+  }
   runApp(const MyApp());
 }
 
